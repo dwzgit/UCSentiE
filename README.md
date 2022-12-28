@@ -9,9 +9,13 @@ The package includes a script to build cross-lingual sentiment word embeddings a
 # Usage
 In order to build your own cross-lingual sentiment word embeddings, you should first train monolingual word embeddings for each language using your favorite tool (e.g. [word2vec](https://github.com/tmikolov/word2vec) or [fasttext](https://github.com/facebookresearch/fastText)) and then map them to a common space with our software as described below. Having done that, you can evaluate the resulting cross-lingual sentiment embeddings using our included tools as discussed next.
 ## Mapping
-You can generate the cross-lingual sentiment word embeddings with the code as follows:
+You can generate the cross-lingual sentiment word embeddings by our SentiWE model with the code as follows:
 ```
 python UCL-SWE.py
+```
+You can also obtain the cross-lingualword embeddings by [VecMap](https://github.com/lishiqimagic/vecmap) model with the code as follows:
+```
+python VecMap.py
 ```
 ## Evaluation
 ### 1. Bilingual Lexicon Construction
