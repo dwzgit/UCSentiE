@@ -1,0 +1,96 @@
+数据集说明：
+1.data文件夹中为英、西、德、日、中单语词向量以及双语标准词典：
+    1）MUSEdictionaries文件夹中为双语标准词典：
+        en-ch-process.txt：英-中双语词典
+        en-de-process.txt：英-德双语词典
+        en-es-process.txt：英-西双语词典
+        en-ja-process.txt：英-日双语词典
+        en-senti.txt：初始解生成所需英语单词
+    2）embeddings文件夹中为所下载的单语词向量。
+
+2.datasets文件夹中为英、西、德、日、中评论数据集
+    ch：中文评论数据集
+    de：德语评论数据集
+    en：英语评论数据集
+    es：西班牙语评论数据集
+    ja：日语评论数据集
+
+3.lexicon文件夹中存放生成的初始解
+
+4.stopWord文件夹中存放停用词表
+    stopWord.txt：停用词表
+
+代码说明：
+1.对比模型：
+    1）VecMap.py：为VecMap模型代码，根据所需设置源语言词向量、目标语言词向量以及跨语言词向量输出位置。
+        src_input: 源语言词向量
+        trg_input: 目标语言词向量
+        src_output: 源语言跨语言词向量输出
+        trg_output: 目标语言跨语言词向量输出
+        cuda: 是否使用cuda
+        unsupervised_vocab: 初始解词对个数 4000
+        vocabulary_cutoff: 每次进行映射的单词数 20000
+
+2.UCL-SWE模型：
+    1）UCL-SWE.py：为UCL-SWE模型的代码，根据所需设置源语言词向量、目标语言词向量、alpha、beta和跨语言词向量输出位置。
+    输入：源语言词向量、目标语言词向量、alpha、beta和跨语言词向量输出位置
+    输出：源语言和目标语言跨语言词向量文件
+
+    PSE类：生成先验情感信息映射矩阵
+        fit函数：训练情感分类器和情感映射，生成先验情感信息映射矩阵，主要参数如下：
+        xp：词向量矩阵的类型，为cupy或numpy
+        init_x, init_y：初始解中的词对所对应的源语言与目标语言词向量矩阵
+        dataset._Xtrain, dataset._ytrain：源语言评论数据的数据与标签（为训练情感分类器）
+        epochs：训练周期
+        alpha：调和参数，用以结合映射损失和情感分类损失生成联合损失训练模型
+
+    主函数主要参数如下：
+        source_lang：源语言
+        target_lang：目标语言
+        epochs：PSE类训练周期
+        alpha：PSE类调和参数
+        src_vecs：源语言词向量
+        trg_vecs：目标语言词向量
+        src_out：源语言跨语言词向量输出
+        trg_out：目标语言跨语言词向量输出
+        lexicon：初始解存储位置
+        beta：先验情感信息映射矩阵与语义信息映射矩阵的调和参数
+
+    2）cupy_utils.py：为方便导入cupy模块设置的类
+
+    3）embeddings.py：读取和写入词向量，以及将词向量进行标准化
+    主要函数及功能如下：
+        read：输入词向量路径，返回单词表和词向量矩阵
+        write：输入保存路径以及单词表和词向量矩阵，输出词向量文件
+        normalize：根据需求进行标准化操作
+
+    4）computing_w1.py：计算先验情感信息映射矩阵
+
+3.实验：
+    1）CLSA_SVM.py：进行跨语言情感分析实验的代码，根据所需设置源语言词向量、目标语言词向量以及评论数据集
+    输入：源语言词向量、目标语言词向量以及评论数据集
+    输出：跨语言情感分类准确率及F1值
+
+    主要参数如下：
+        src_vecs：源语言词向量
+        trg_vecs：目标语言词向量
+        dataset：评论数据集路径
+        binary：二分类问题标志
+        source_lang：源语言
+        target_lang：目标语言
+
+    2）WordSimilarity.py：进行双语词典生成实验的代码，根据所需设置源语言词向量、目标语言词向量以及双语词典
+    输入：源语言词向量、目标语言词向量以及双语词典
+    输出：生成双语词典准确率
+
+    主要参数如下：
+        src_vecs：源语言词向量
+        trg_vecs：目标语言词向量
+        lexicon：标准双语词典
+        norm：词向量标准化过程
+
+    3）Representation.py：计算评论句子的平均词向量的类
+
+    4）utils.py：切分数据集以及计算最优参数提供给跨语言情感分析实验的类
+
+    5）Datasets.py：载入数据集的类
