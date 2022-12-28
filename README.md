@@ -15,7 +15,7 @@ python UCL-SWE.py
 ```
 ## Evaluation
 ### 1. Bilingual Lexicon Construction
-The CSLS retrieval algorithm was used to select the target language words with the nearest CSLS value for each word in the source language as translation words to construct a bilingual dictionary. Then, the MUSE bilingual dictionary provided by Facebbook was used as the benchmark to compare the bilingual dictionary constructed by the model and calculate the accuracy:
+The CSLS retrieval algorithm was used to select the target language words with the nearest CSLS value for each word in the source language as translation words to construct a bilingual dictionary. Then, the MUSE bilingual dictionaries provided by Facebbook were used as the benchmark to compare the bilingual dictionaries constructed by the model and calculate the accuracy:
 ```
 python WordSimilarity.py
 ```
