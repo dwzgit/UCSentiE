@@ -1,5 +1,5 @@
 # SentiWE 
-This is an open source implementation of our framework to obtains cross-lingual sentiment word embeddings by unsupervised self-learning iterations.
+This is an open source implementation of our framework to obtain cross-lingual sentiment word embeddings by unsupervised self-learning iterations.
 The package includes a script to build cross-lingual sentiment word embeddings as described in the paper, as well as evaluation tools in bilingual lexicon construction and cross-lingual sentiment analysis.
 # Requirements
 * Python 3
