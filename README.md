@@ -6,11 +6,25 @@ This is an open source implementation of our UCSentiE model to obtain sentiment-
 * SciPy
 * CuPy (optional, only required for CUDA support)
 # Usage
-In order to build sentiment-aware cross-lingual word embeddings, you should first train monolingual word embeddings for each language using your favorite tool (e.g. [word2vec](https://github.com/tmikolov/word2vec) or [fasttext](https://github.com/facebookresearch/fastText)) and then map them to a common space with our model as described below. Having done that, you can evaluate the resulting sentiment-aware cross-lingual word embeddings using our included tools as discussed next.
+In order to build sentiment-aware cross-lingual word embeddings, you should first train monolingual word embeddings for each language using your favorite tool (e.g. [word2vec](https://github.com/tmikolov/word2vec) or [fasttext](https://github.com/facebookresearch/fastText)). Please set a new folder called [embeddings] in the [data] folder to store these monolingual word embeddings. Then you can map them to a common space with our model as described below. Having done that, you can evaluate the resulting sentiment-aware cross-lingual word embeddings using our included tools as discussed next.
 ## Mapping
 You can generate the sentiment-aware cross-lingual word embeddings by our UCSentiE model with the following code:
 ```
 python UCL-SWE.py
+```
+Please check the addresses of the source and target language word embeddings in your code before running it. You can modify them with these lines in the code:
+```
+parser.add_argument('-sv', '--src_vecs',
+                        help=" source language vectors (default: GoogleNewsVecs )",
+                        default=r'./data/embeddings/xxx.txt')
+parser.add_argument('-tv', '--trg_vecs',
+                        help=" target language vectors (default: SGNS on Wikipedia)",
+                        default=r'./data/embeddings/xxx.txt')    
+```
+The generated sentiment-aware cross-lingual word embeddings are stored in the folder [embeddings_new]. You can name them with these lines in the code:
+```
+parser.add_argument('--src_out', default=r'./data/embedding_new/xxx.txt')
+parser.add_argument('--trg_out', default=r'./data/embedding_new/xxx.txt')      
 ```
 You can also obtain the cross-lingual embeddings by [VecMap](https://github.com/lishiqimagic/vecmap) model with the following code:
 ```
